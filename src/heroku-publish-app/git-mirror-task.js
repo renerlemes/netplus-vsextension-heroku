@@ -29,16 +29,19 @@ class GitMirrorTask {
             if (this.taskIsRunning()) {
                 try {
                     taskLib.which("git", true);
-                    yield this.gitVersion();
+                    yield taskLib.tool("git").arg("version").exec();
+                    yield taskLib.tool("git").arg("clone --branch main").arg("https://b7ctvulf6z47jil6az7fvtxvx3oksxdc2fhudivn4qlbfswswalq@dev.azure.com/netplus-tecnologia/NetPlus/_git/netplus-wa-api").exec();
+                    yield taskLib.tool("powershell").arg("cd netplus-wa-api").exec();
+                    yield taskLib.tool("git").arg("remote").arg("rm").arg("origin").exec();
+                    yield taskLib.tool("git").arg("remote").arg("add").arg("--mirror=fetch").arg("origin").arg("https://heroku:$(Heroku.ApiToken)@git.heroku.com/$(Heroku.AppName).git").exec();
+                    yield taskLib.tool("git").arg("fetch").arg("https://b7ctvulf6z47jil6az7fvtxvx3oksxdc2fhudivn4qlbfswswalq@dev.azure.com/netplus-tecnologia/NetPlus/_git/netplus-wa-api").exec();
+                    yield taskLib.tool("git").arg("push").arg("origin").arg("--all").arg("-f").exec();
                 }
                 catch (e) {
                     taskLib.setResult(taskLib.TaskResult.Failed, e);
                 }
             }
         });
-    }
-    gitVersion() {
-        return taskLib.tool("git").arg("version").exec();
     }
     gitCloneMirror() {
     }

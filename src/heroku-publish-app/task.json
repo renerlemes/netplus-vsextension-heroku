@@ -16,7 +16,7 @@
         {
             "name": "herokuApplicationName",
             "type": "string",
-            "label": "Application Name 1.0.11",
+            "label": "Application Name 1.0.18",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "The application name"

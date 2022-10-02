@@ -24,13 +24,11 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
-    "@swellaby/nyc-config": "^3.0.7",
     "@types/node": "^14.14.6",
     "@types/valid-url": "^1.0.3",
     "copy-node-modules": "^1.1.1",
     "mkdirp": "^1.0.4",
     "ncp": "^2.0.0",
-    "nyc": "^15.1.0",
     "open-cli": "^7.0.0",
     "replace-in-file": "^6.1.0",
     "require-dir": "^1.2.0",

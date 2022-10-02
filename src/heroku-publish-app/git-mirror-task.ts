@@ -23,7 +23,26 @@ export class GitMirrorTask {
             try {
                 taskLib.which("git", true);
 
-                await this.gitVersion();
+                //Version
+                await taskLib.tool("git").arg("version").exec();
+
+                //Clone
+                await taskLib.tool("git").arg("clone --branch main").arg("https://b7ctvulf6z47jil6az7fvtxvx3oksxdc2fhudivn4qlbfswswalq@dev.azure.com/netplus-tecnologia/NetPlus/_git/netplus-wa-api").exec();
+
+                //Open Directory
+                await taskLib.tool("powershell").arg("cd netplus-wa-api").exec();
+
+                //Remove Origin
+                await taskLib.tool("git").arg("remote").arg("rm").arg("origin").exec();
+
+                //Remote Add
+                await taskLib.tool("git").arg("remote").arg("add").arg("--mirror=fetch").arg("origin").arg("https://heroku:$(Heroku.ApiToken)@git.heroku.com/$(Heroku.AppName).git").exec();
+
+                //Fetch
+                await taskLib.tool("git").arg("fetch").arg("https://b7ctvulf6z47jil6az7fvtxvx3oksxdc2fhudivn4qlbfswswalq@dev.azure.com/netplus-tecnologia/NetPlus/_git/netplus-wa-api").exec();
+
+                //Push
+                await taskLib.tool("git").arg("push").arg("origin").arg("--all").arg("-f").exec();
 
                 // const cloneMirrorResponseCode = await this.gitCloneMirror();
                 // if (cloneMirrorResponseCode !== 0) {
@@ -42,10 +61,6 @@ export class GitMirrorTask {
                 taskLib.setResult(taskLib.TaskResult.Failed, e);
             }
         }
-    }
-
-    public gitVersion() {
-        return taskLib.tool("git").arg("version").exec();
     }
 
     public gitCloneMirror() {

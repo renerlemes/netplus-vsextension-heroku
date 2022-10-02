@@ -117,3 +117,4 @@ dist
 src/sessionData/qrcode
 src/sessionData
 yarn.lock
+.release
