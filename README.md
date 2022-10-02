@@ -21,3 +21,7 @@
     - $(Build.Repository.Uri)       https://{Organization}@dev.azure.com/{Organization}/{Projeto}/_git/{Repositorio}
     - Azure - GIT                   https://${System.AccessToken}@dev.azure.com/{Organization}/{Projeto}/_git/{Repositorio}
     - Heroku - GIT                  https://heroku:${Heroku.ApiKey}@git.heroku.com/${HerokuAppName}.git
+
+* Azure TS Lib Documentation
+
+    - https://github.com/microsoft/azure-pipelines-task-lib/blob/master/node/docs/azure-pipelines-task-lib.md

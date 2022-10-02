@@ -11,24 +11,8 @@
         "Minor": 0,
         "Patch": 0
     },
-    "instanceNameFormat": "(1.0.24) - Heroku Publish Application to $(herokuApplicationName)",
+    "instanceNameFormat": "(1.0.34) - Heroku Publish Application to $(herokuApplicationName)",
     "inputs": [
-        {
-            "name": "azureRepositorySourceUrl",
-            "type": "string",
-            "label": "Azure - Git Repository Url",
-            "defaultValue": "$(Build.Repository.Uri)",
-            "required": true,
-            "helpMarkDown": "The Azure DevOps Url that used to clone repository"
-        },
-        {
-            "name": "azureRepositoryPAT",
-            "type": "string",
-            "label": "Azure - Personal Access Token",
-            "defaultValue": "$(System.AccessToken)",
-            "required": true,
-            "helpMarkDown": "A Personal Access Token that grants read access to the Git repository"
-        },
         {
             "name": "herokuApplicationName",
             "type": "string",

@@ -1,21 +1,22 @@
 import * as taskLib from "azure-pipelines-task-lib";
+import tl = require('azure-pipelines-task-lib/task');
 import * as validUrl from "valid-url";
-import { readFile, writeFileSync } from "fs";
-import { resolve as resolvePath, join as joinPath } from "path";
 
 export class GitMirrorTask {
     private herokuApplicationName: string;
     private herokuApiKey: string;
     private azureRepositorySourceUrl: string;
+    private azureRepositorySourceUrlFormated: string;
     private azureRepositoryPAT: string;
 
     public constructor() {
         try {
             if (this.taskIsRunning()) {
+                this.azureRepositoryPAT = taskLib.getVariable("System.AccessToken");
+                this.azureRepositorySourceUrl = taskLib.getVariable("Build.Repository.Uri");
+                this.azureRepositorySourceUrlFormated = `https://${this.azureRepositoryPAT}@${this.azureRepositorySourceUrl.split('@')[1]}`;
                 this.herokuApplicationName = taskLib.getInput("herokuApplicationName", true);
                 this.herokuApiKey = taskLib.getInput("herokuApiKey", true);
-                this.azureRepositorySourceUrl = taskLib.getInput("azureRepositorySourceUrl", true);
-                this.azureRepositoryPAT = taskLib.getInput("azureRepositoryPAT", true);
             }
         } catch (e) {
             taskLib.setResult(taskLib.TaskResult.Failed, e);
@@ -26,32 +27,31 @@ export class GitMirrorTask {
         if (this.taskIsRunning()) {
             try {
                 taskLib.which("git", true);
-
-                //Azure Repository Format
-                let azureRepositorySourceUrlFormated: string = `https://${this.azureRepositoryPAT}@${this.azureRepositorySourceUrl.split('@')[1]}`;
+                taskLib.which("bash", true);
 
                 //Version
                 await taskLib.tool("git").arg("version").exec();
 
                 //Clone
-                await taskLib.tool("git").arg("clone").arg(azureRepositorySourceUrlFormated).exec();
+                await taskLib.tool("git").arg("clone").arg(this.azureRepositorySourceUrlFormated).exec();
 
                 //Open Directory
                 let azureRepositoryProjectName = this.azureRepositorySourceUrl.split('/').pop();
-                await taskLib.tool("git").arg(`cd ${azureRepositoryProjectName}`).exec();
+                await tl.cd(azureRepositoryProjectName);
+                //await taskLib.tool("bash").arg(`cd ${azureRepositoryProjectName}`).exec();
 
                 //Remove Origin
-                await taskLib.tool("git").arg("remote rm origin").exec();
+                await taskLib.tool("git").arg("remote").arg("rm").arg("origin").exec();
 
                 //Remote Add
                 let herokuGitUrl = `https://heroku:${this.herokuApiKey}@git.heroku.com/${this.herokuApplicationName}.git`;
-                await taskLib.tool("git").arg("remote add --mirror=fetch origin").arg(herokuGitUrl).exec();
+                await taskLib.tool("git").arg("remote").arg("add").arg("--mirror=fetch").arg("origin").arg(herokuGitUrl).exec();
 
                 //Fetch
-                await taskLib.tool("git").arg("fetch").arg(azureRepositorySourceUrlFormated).exec();
+                await taskLib.tool("git").arg("fetch").arg(this.azureRepositorySourceUrlFormated).exec();
 
                 //Push
-                await taskLib.tool("git").arg("push origin --all -f").exec();
+                await taskLib.tool("git").arg("push").arg("origin").arg("--all").arg("-f").exec();
 
                 // const cloneMirrorResponseCode = await this.gitCloneMirror();
                 // if (cloneMirrorResponseCode !== 0) {
@@ -120,14 +120,6 @@ export class GitMirrorTask {
         //     .arg("--mirror")
         //     .arg(authenticatedDestinationGitUrl)
         //     .exec();
-    }
-
-    public getSourceVerifySSLCertificate(): boolean {
-        return true;
-    }
-
-    public getDestinationVerifySSLCertificate(): boolean {
-        return true;
     }
 
     public getDefaultGitCloneDirectory(uri: string): string {
