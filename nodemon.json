@@ -1,8 +1,0 @@
-{
-    "watch": [
-        "src"
-    ],
-    "ignore": [],
-    "ext": "js, ejs",
-    "exec": "node --inspect src/server.js"
-}

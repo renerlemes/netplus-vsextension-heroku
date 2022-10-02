@@ -1,9 +1,11 @@
 {
     "manifestVersion": 1,
-    "id": "mirror-git-repository",
-    "name": "Heroku Push Application",
-    "version": "1..0.0",
-    "publisher": "Rener Lemes",
+    "id": "netplus-vsextension-heroku",
+    "publisher": "RenerLemes",
+    "version": "1.0.11",
+    "name": "Heroku Publish Application",
+    "description": "A straightforward utility to publish application in Heroku",
+    "public": false,
     "tags": [
         "heroku",
         "git",
@@ -14,21 +16,20 @@
         "repo",
         "repository"
     ],
+    "categories": [
+        "Azure Pipelines"
+    ],
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
         }
-    ],
-    "description": "A straightforward utility to publish application in Heroku",
-    "categories": [
-        "Azure Pipelines"
     ],
     "icons": {
         "default": "images/extension-icon.png"
     },
     "files": [
         {
-            "path": ".release"
+            "path": "src"
         }
     ],
     "content": {
@@ -60,14 +61,14 @@
     },
     "contributions": [
         {
-            "id": "netplustecnologia-vsts-heroku",
+            "id": "netplus-vsextension-heroku",
             "description": "A straightforward utility to publish application in Heroku",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": ".release/git-mirror"
+                "name": "src/heroku-publish-app"
             }
         }
     ]
