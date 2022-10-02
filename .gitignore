@@ -118,3 +118,8 @@ src/sessionData/qrcode
 src/sessionData
 yarn.lock
 .release
+*.vsix
+src/heroku-publish-app/*.js
+*.vsix
+src/heroku-publish-app/*.js
+src/heroku-publish-app/*.js.map

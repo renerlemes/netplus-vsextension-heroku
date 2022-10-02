@@ -4,14 +4,18 @@ import { readFile, writeFileSync } from "fs";
 import { resolve as resolvePath, join as joinPath } from "path";
 
 export class GitMirrorTask {
-    private herokuApplicationName: string | undefined;
-    private herokuApiKey: string | undefined;
+    private herokuApplicationName: string;
+    private herokuApiKey: string;
+    private azureRepositorySourceUrl: string;
+    private azureRepositoryPAT: string;
 
     public constructor() {
         try {
             if (this.taskIsRunning()) {
                 this.herokuApplicationName = taskLib.getInput("herokuApplicationName", true);
                 this.herokuApiKey = taskLib.getInput("herokuApiKey", true);
+                this.azureRepositorySourceUrl = taskLib.getInput("azureRepositorySourceUrl", true);
+                this.azureRepositoryPAT = taskLib.getInput("azureRepositoryPAT", true);
             }
         } catch (e) {
             taskLib.setResult(taskLib.TaskResult.Failed, e);
@@ -23,26 +27,31 @@ export class GitMirrorTask {
             try {
                 taskLib.which("git", true);
 
+                //Azure Repository Format
+                let azureRepositorySourceUrlFormated: string = `https://${this.azureRepositoryPAT}@${this.azureRepositorySourceUrl.split('@')[1]}`;
+
                 //Version
                 await taskLib.tool("git").arg("version").exec();
 
                 //Clone
-                await taskLib.tool("git").arg("clone --branch main").arg("https://b7ctvulf6z47jil6az7fvtxvx3oksxdc2fhudivn4qlbfswswalq@dev.azure.com/netplus-tecnologia/NetPlus/_git/netplus-wa-api").exec();
+                await taskLib.tool("git").arg("clone").arg(azureRepositorySourceUrlFormated).exec();
 
                 //Open Directory
-                await taskLib.tool("powershell").arg("cd netplus-wa-api").exec();
+                let azureRepositoryProjectName = this.azureRepositorySourceUrl.split('/').pop();
+                await taskLib.tool("git").arg(`cd ${azureRepositoryProjectName}`).exec();
 
                 //Remove Origin
-                await taskLib.tool("git").arg("remote").arg("rm").arg("origin").exec();
+                await taskLib.tool("git").arg("remote rm origin").exec();
 
                 //Remote Add
-                await taskLib.tool("git").arg("remote").arg("add").arg("--mirror=fetch").arg("origin").arg("https://heroku:$(Heroku.ApiToken)@git.heroku.com/$(Heroku.AppName).git").exec();
+                let herokuGitUrl = `https://heroku:${this.herokuApiKey}@git.heroku.com/${this.herokuApplicationName}.git`;
+                await taskLib.tool("git").arg("remote add --mirror=fetch origin").arg(herokuGitUrl).exec();
 
                 //Fetch
-                await taskLib.tool("git").arg("fetch").arg("https://b7ctvulf6z47jil6az7fvtxvx3oksxdc2fhudivn4qlbfswswalq@dev.azure.com/netplus-tecnologia/NetPlus/_git/netplus-wa-api").exec();
+                await taskLib.tool("git").arg("fetch").arg(azureRepositorySourceUrlFormated).exec();
 
                 //Push
-                await taskLib.tool("git").arg("push").arg("origin").arg("--all").arg("-f").exec();
+                await taskLib.tool("git").arg("push origin --all -f").exec();
 
                 // const cloneMirrorResponseCode = await this.gitCloneMirror();
                 // if (cloneMirrorResponseCode !== 0) {

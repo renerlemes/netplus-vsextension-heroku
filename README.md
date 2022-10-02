@@ -16,4 +16,8 @@
     - https://github.com/swellaby/vsts-mirror-git-repository
     - https://github.com/swellaby/vsts-mirror-git-repository/blob/master/.github/CONTRIBUTING.md
 
-b7ctvulf6z47jil6az7fvtxvx3oksxdc2fhudivn4qlbfswswalq
+* Padrão Inputs
+
+    - $(Build.Repository.Uri)       https://{Organization}@dev.azure.com/{Organization}/{Projeto}/_git/{Repositorio}
+    - Azure - GIT                   https://${System.AccessToken}@dev.azure.com/{Organization}/{Projeto}/_git/{Repositorio}
+    - Heroku - GIT                  https://heroku:${Heroku.ApiKey}@git.heroku.com/${HerokuAppName}.git
