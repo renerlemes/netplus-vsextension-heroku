@@ -99,12 +99,10 @@ export class GitMirrorTask {
     }
 
     public getSourceVerifySSLCertificate(): boolean {
-        //return this.sourceVerifySSLCertificate;
         return true;
     }
 
     public getDestinationVerifySSLCertificate(): boolean {
-        //return this.destinationVerifySSLCertificate;
         return true;
     }
 
