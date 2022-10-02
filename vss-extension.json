@@ -1,10 +1,11 @@
 {
     "manifestVersion": 1,
     "id": "mirror-git-repository",
-    "name": "Mirror Git Repository",
-    "version": "1.1.10",
-    "publisher": "Swellaby",
+    "name": "Heroku Push Application",
+    "version": "1..0.0",
+    "publisher": "Rener Lemes",
     "tags": [
+        "heroku",
         "git",
         "clone",
         "push",
@@ -18,7 +19,7 @@
             "id": "Microsoft.VisualStudio.Services"
         }
     ],
-    "description": "A straightforward utility to mirror one Git repository to another location",
+    "description": "A straightforward utility to publish application in Heroku",
     "categories": [
         "Azure Pipelines"
     ],
@@ -44,23 +45,23 @@
     },
     "links": {
         "getstarted": {
-            "uri": "https://github.com/swellaby/vsts-mirror-git-repository"
+            "uri": "https://github.com/renerlemes/netplus-vsextension-heroku.git"
         },
         "support": {
-            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/issues/new/choose"
+            "uri": "https://github.com/renerlemes/netplus-vsextension-heroku/issues/new"
         },
         "license": {
-            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/blob/master/LICENSE"
+            "uri": "https://raw.githubusercontent.com/swellaby/vsts-mirror-git-repository/master/LICENSE"
         }
     },
     "repository": {
         "type": "git",
-        "uri": "https://github.com/swellaby/vsts-mirror-git-repository"
+        "uri": "https://github.com/renerlemes/netplus-vsextension-heroku.git"
     },
     "contributions": [
         {
-            "id": "mirror-git-repository-vsts-task",
-            "description": "A straightforward utility to mirror one Git repository to another location",
+            "id": "netplustecnologia-vsts-heroku",
+            "description": "A straightforward utility to publish application in Heroku",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"
