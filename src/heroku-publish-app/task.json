@@ -11,7 +11,7 @@
         "Minor": 0,
         "Patch": 0
     },
-    "instanceNameFormat": "(1.0.34) - Heroku Publish Application to $(herokuApplicationName)",
+    "instanceNameFormat": "Heroku Publish Application to $(herokuApplicationName)",
     "inputs": [
         {
             "name": "herokuApplicationName",
@@ -32,7 +32,7 @@
     ],
     "execution": {
         "Node": {
-            "target": "git-mirror-task.js"
+            "target": "heroku-publish-app.js"
         }
     }
 }

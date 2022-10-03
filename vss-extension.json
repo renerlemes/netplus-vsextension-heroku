@@ -2,10 +2,10 @@
     "manifestVersion": 1,
     "id": "netplus-vsextension-heroku",
     "publisher": "RenerLemes",
-    "version": "1.0.34",
+    "version": "1.0.35",
     "name": "Heroku Publish Application",
     "description": "A straightforward utility to publish application in Heroku",
-    "public": false,
+    "public": true,
     "tags": [
         "heroku",
         "git",
