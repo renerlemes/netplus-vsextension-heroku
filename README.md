@@ -1,6 +1,6 @@
 # Heroku Application Publish
 
-![Heroku Application Publish](images/azure-pipeline.jpg)
+![Heroku Application Publish](https://raw.githubusercontent.com/renerlemes/netplus-vsextension-heroku/main/images/azure-pipeline.jpg)
 
 [![Version Badge](https://img.shields.io/vscode-marketplace/v/renerlemes.netplus-vsextension-heroku?style=flat-square&label=marketplace)](https://marketplace.visualstudio.com/items?itemName=renerlemes.netplus-vsextension-heroku)
 [![Installs Badge](https://img.shields.io/vscode-marketplace/i/renerlemes.netplus-vsextension-heroku?style=flat-square&label=marketplace)](https://marketplace.visualstudio.com/items?itemName=renerlemes.netplus-vsextension-heroku)
